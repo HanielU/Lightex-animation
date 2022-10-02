@@ -5,14 +5,13 @@ import type { TransitionConfig } from "svelte/transition";
  * NOTE:
  * ---
  * Custom transition functions always run twice, causing some minor bugs
+ *
+ * :fix: Try to rewrite everything in native svelte transitions
  */
-
-// let ph1r = false
-// let ph2r = false
 
 export function phaseInText(_: Element, { targets = "", duration = 500 }): TransitionConfig {
   return {
-    css: () => {
+    css() {
       anime({
         targets,
         duration,
@@ -29,12 +28,12 @@ export function phaseInText(_: Element, { targets = "", duration = 500 }): Trans
 export function phaseOutText(_: HTMLElement, { targets = "", duration = 0 }): TransitionConfig {
   return {
     duration: duration + (document.querySelectorAll(targets).length * 100 - 100),
-    css: () => {
+    css() {
       anime({
         targets,
         duration,
-        translateY: 50,
-        opacity: 0,
+        translateY: [0, 50],
+        opacity: [1, 0],
         delay: anime.stagger(100, { easing: "easeInOutCubic", direction: "reverse" })
       });
 
