@@ -1,6 +1,6 @@
-# create-svelte
+# Attempt at design implementation
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This is my attempt to replicate the design found [here](https://cdn.dribbble.com/userupload/2967945/file/original-333183d1432c00cefb81a10480301be9.mp4)
 
 ## Creating a project
 
