@@ -10,6 +10,7 @@
     <div
       class="cursor-pointer select-none rounded-md bg-blue-500 p-5 font-semibold text-white shadow-blue-800 transition tap-shrink hover:shadow-xl"
       on:click={() => {
+        if ($show === false) return; // prevents ability to click btn during animation
         // if the new selection is the same as the old selection then return
         if ($lamps.find(l => l.selected)?.name === name) return;
         $lamps = $lamps.map(lamp => ({ ...lamp, selected: lamp.name === name }));

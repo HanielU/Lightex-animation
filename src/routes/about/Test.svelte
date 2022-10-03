@@ -9,8 +9,6 @@
   ];
   let visible = false;
 
-  $: browser && console.log(anime({}));
-
   function reverse(
     _: HTMLElement,
     { targets, duration }: { targets: string; duration: number }

@@ -6,7 +6,6 @@
   import type { Writable } from "svelte/store";
   import { getContext } from "svelte";
   import { lamps } from "$lib/stores";
-  import { phaseInText, phaseOutText } from "./animations";
   import { wait } from "$lib/utils";
 
   let favorited = false;
@@ -14,16 +13,18 @@
   let counter = 0;
   let btn: HTMLDivElement;
   let counterWrapper: HTMLDivElement;
+  let outroTargets: string | undefined;
 
-  const textAnimDuration = 500;
+  const textAnimDuration = 400;
   const show = getContext<Writable<boolean>>("show-text");
 
   $: favorited, (counter = 0); // resets counter to 0 when favorited changes
   $: ({ name, price } = $lamps.find(l => l.selected)!);
-
-  // if $show changes then run the "wait" block
-  $: $show,
-    wait(textAnimDuration).then(() => {
+  $: outroTargets &&
+    wait(
+      // regular duration + (100ms stagger per element - (the first element's supposed stagger + 50ms allowance))
+      textAnimDuration + (document.querySelectorAll(outroTargets).length * 100 - (100 + 50))
+    ).then(() => {
       $show = true;
       counter = 0;
       favorited = false;
@@ -55,10 +56,7 @@
     tl.play();
   };
 
-  function reverseAddToCart(
-    node: Element,
-    params?: Partial<{ duration: number }>
-  ): TransitionConfig {
+  function reverseAddToCart(_: Element): TransitionConfig {
     return {
       css: () => {
         if (!playedOnce) return "";
@@ -66,7 +64,7 @@
         anime
           .timeline({
             easing: "easeOutCubic",
-            duration: params?.duration || 500
+            duration: 500
           })
           .add({
             targets: counterWrapper,
@@ -87,10 +85,39 @@
     };
   }
 
-  function hold(node: HTMLElement, params: { duration: any }): TransitionConfig {
+  function phaseInText(_: Element, { targets = "", duration = 500 }): TransitionConfig {
     return {
-      css: () => "",
-      duration: params.duration
+      css: () => (
+        anime({
+          targets,
+          duration,
+          translateY: [-30, 0],
+          opacity: [0, 1],
+          easing: "easeOutCubic",
+          delay: anime.stagger(100)
+        }),
+        ""
+      )
+    };
+  }
+
+  function phaseOutText(_: HTMLElement, { targets = "", duration = 0 }): TransitionConfig {
+    outroTargets = targets;
+    return {
+      // regular duration + (100ms stagger per element - the first element's supposed stagger)
+      duration: duration + (document.querySelectorAll(targets).length * 100 - 100),
+      css: () => (
+        anime({
+          targets,
+          duration,
+          translateY: [0, 30],
+          opacity: 0,
+          easing: "easeInQuad",
+          delay: anime.stagger(100, { direction: "reverse" }),
+          complete: () => (outroTargets = undefined)
+        }),
+        ""
+      )
     };
   }
 </script>
