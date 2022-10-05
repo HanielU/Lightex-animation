@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import anime from "animejs";
   import type { TransitionConfig } from "svelte/transition";
   let cats = [
