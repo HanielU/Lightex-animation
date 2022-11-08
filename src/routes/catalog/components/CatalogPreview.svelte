@@ -30,7 +30,7 @@
       favorited = false;
     });
 
-  const addToCart = () => {
+  const handleAddToCartAnim = () => {
     const tl = anime
       .timeline({
         autoplay: false,
@@ -123,7 +123,7 @@
 </script>
 
 <div
-  class="mb-2 rounded-t-3xl rounded-b-lg p-10 font-secondary [background:linear-gradient(155deg,_rgba(107,124,211,1)_0%,_rgba(65,83,173,1)_100%)]"
+  class="font-secondary mb-2 rounded-t-3xl rounded-b-lg p-10 [background:linear-gradient(155deg,_rgba(107,124,211,1)_0%,_rgba(65,83,173,1)_100%)]"
 >
   <!-- HEADING -->
   <header class="mb-5 flex items-center justify-between">
@@ -139,10 +139,10 @@
 
     <!-- favorite icon -->
     <div
-      class="ml-auto transform-gpu cursor-pointer p-2 text-2xl transition-transform tap-shrink"
+      class="tap-shrink ml-auto transform-gpu cursor-pointer p-2 text-2xl transition-transform"
       on:click={() => {
         favorited = !favorited;
-        !playedOnce && addToCart();
+        !playedOnce && handleAddToCartAnim();
       }}
     >
       <HeartIcon solid={favorited} class="fill-white" />
@@ -165,7 +165,7 @@
           <sup class="relative -left-2 -top-3 text-xl">$</sup>
         </h3>
 
-        <ul class="a-text max-w-sm font-primary">
+        <ul class="a-text font-primary max-w-sm">
           {#each ["Fact", "About the brand", "Product Information", "Colors"] as info}
             <li class="flex items-center justify-between border-b border-b-white/50 py-2 text-xl">
               {info}
@@ -184,7 +184,7 @@
       <!-- bottom -->
       <div class="relative mt-auto flex w-full justify-center">
         <div
-          class="absolute flex -translate-x-32 items-center gap-2 font-primary text-xl opacity-0"
+          class="font-primary absolute flex -translate-x-32 items-center gap-2 text-xl opacity-0"
           bind:this={counterWrapper}
         >
           <!-- subtract btn -->
@@ -200,8 +200,8 @@
           <!-- div wrapper because animejs won't let me do the scale-down on click transition-->
           <div bind:this={btn} in:reverseAddToCart>
             <button
-              class="block transform-gpu rounded-md bg-orange px-8 py-2 font-primary font-semibold transition-transform tap-shrink"
-              on:click|once={!playedOnce ? addToCart : void {}}>Add to cart</button
+              class="bg-orange font-primary tap-shrink block transform-gpu rounded-md px-8 py-2 font-semibold transition-transform"
+              on:click|once={!playedOnce ? handleAddToCartAnim : void {}}>Add to cart</button
             >
           </div>
         {/key}
@@ -209,9 +209,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .counter-btn {
-    @apply transform-gpu rounded-md bg-white/40 px-2 py-1 shadow-sm transition tap-shrink active:bg-white/70 active:shadow-lg;
-  }
-</style>

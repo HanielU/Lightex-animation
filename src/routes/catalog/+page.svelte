@@ -9,7 +9,7 @@
   setContext("show-text", showText);
 </script>
 
-<div class="grid grid-cols-[100px,_1fr] justify-center gap-8 text-white">
+<div class="grid grid-cols-[100px_1fr] justify-center gap-8 text-white">
   <Sidebar />
 
   <div>
