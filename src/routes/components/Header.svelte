@@ -1,6 +1,4 @@
 <script>
-  import BagIcon from "$lib/components/icons/BagIcon.svelte";
-  import SearchIcon from "$lib/components/icons/SearchIcon.svelte";
   import clsx from "clsx";
   import { page } from "$app/stores";
 </script>
@@ -32,11 +30,11 @@
   <div class="flex gap-8">
     <!-- icon wrapper -->
     <div class="flex">
-      <SearchIcon class="fill-gray-800 text-2xl" />
+      <div class="fill-gray-800 text-2xl i-ri-search-line" />
     </div>
     <!-- icon wrapper -->
     <div class="flex">
-      <BagIcon class="fill-gray-800 text-2xl" />
+      <div class="fill-gray-800 text-2xl i-ri-shopping-bag-line" />
     </div>
   </div>
 </nav>

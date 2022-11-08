@@ -1,6 +1,4 @@
 <script lang="ts">
-  import ArrowDownIcon from "$lib/components/icons/ArrowDownIcon.svelte";
-  import HeartIcon from "$lib/components/icons/HeartIcon.svelte";
   import anime from "animejs";
   import type { TransitionConfig } from "svelte/transition";
   import type { Writable } from "svelte/store";
@@ -145,7 +143,7 @@
         !playedOnce && handleAddToCartAnim();
       }}
     >
-      <HeartIcon solid={favorited} class="fill-white" />
+      <div class="transition-all {favorited ? 'i-ri-heart-fill' : 'i-ri-heart-line'}" />
     </div>
   </header>
 
@@ -171,7 +169,7 @@
               {info}
 
               <span class="pr-2">
-                <ArrowDownIcon class="fill-white" />
+                <div class="i-ri-arrow-down-s-line fill-white" />
               </span>
             </li>
           {/each}
